@@ -53,7 +53,7 @@ local bossNamesGroups = {
     ["7449423635"] = {"rip_indra True Form", "Soul Reaper", "Cake Prince", "Dough King", "Leviathan"}  -- Third Sea
 }
 
-local worldBossNames = bossNamesGroups[tostring(game.PlaceId)]
+local worldBossNames = bossNamesGroups[tostring(game.PlaceId)] or {}
 
 local HakiPrice
 local Haki
@@ -297,11 +297,102 @@ if not World1 then
     end
 end
 
--- [Fruit Finder] plr.Character
+
+
+local fruitNames = {
+    ["15060012861"] = "Rocket Fruit",
+    ["15057683975"] = "Spin Fruit",
+    ["15104782377"] = "Blade Fruit",
+    ["15105281957"] = "Spring Fruit",
+    ["15116740364"] = "Bomb Fruit",
+    ["15116696973"] = "Smoke Fruit",
+    ["15107005807"] = "Spike Fruit",
+    ["15111584216"] = "Flame Fruit",
+    ["15112469964"] = "Falcon Fruit",
+    ["15100433167"] = "Ice Fruit",
+    ["15111517529"] = "Sand Fruit",
+    ["15111553409"] = "Dark Fruit",
+    ["15112600534"] = "Diamond Fruit",
+    ["15100283484"] = "Light Fruit",
+    ["15104817760"] = "Rubber Fruit",
+    ["15100485671"] = "Barrier Fruit",
+    ["15112333093"] = "Ghost Fruit",
+    ["15105350415"] = "Magma Fruit"
+}
+
 local fruitstable = {}
 for _, v in next, workspace:GetChildren() do
     if v.Name:find("Fruit") and (v:IsA("Model") or v:IsA("Tool")) then
-        table.insert(fruitstable, "• " .. v.Name)
+        if v:IsA("Tool") then
+            table.insert(fruitstable, "• " .. v.Name)
+        elseif v:IsA("Model") then
+            local fruitContainer = v:FindFirstChild("Fruit")
+            if fruitContainer and fruitContainer:IsA("Model") then
+                -- **Mencari MeshPart dengan lebih tepat**
+                local fruitMesh = rootPart:FindFirstChildWhichIsA("MeshPart") -- Cari MeshPart dalam RootPart
+                if fruitMesh then
+                    local meshId = fruitMesh.MeshId:gsub("rbxassetid://", "") -- Hapus "rbxassetid://" agar sesuai dengan fruitNames
+                    local fruitName = fruitNames[meshId] or "Unknown Fruit" -- Gunakan nama default jika tidak ditemukan
+
+                    v.Name = fruitName -- Ganti nama model sesuai nama buah
+                    table.insert(fruitstable, "• " .. fruitName.." (Appeared)")
+                    print(fruitName)
+                end
+            end
+            if v:FindFirstChild("FruitAnimator") and #v:GetChildren() <= 1 then 
+                table.insert(fruitstable, "• Unrendered " .. v.Name)
+            end
+        end
+    end
+end
+
+local rareFruits = {
+    ["15057718441"] = "Quake Fruit",
+    ["15100313696"] = "Buddha Fruit",
+    ["15116730102"] = "Love Fruit",
+    ["15116967784"] = "Spider Fruit",
+    ["14661873358"] = "Sound Fruit",
+    ["15100246632"] = "Phoenix Fruit",
+    ["15112215862"] = "Portal Fruit",
+    ["15116747420"] = "Rumble Fruit",
+    ["15116721173"] = "Pain Fruit",
+    ["15100384816"] = "Blizzard Fruit",
+    ["15100299740"] = "Gravity Fruit",
+    ["14661837634"] = "Mammoth Fruit",
+    ["15708895165"] = "T-Rex Fruit",
+    ["15100273645"] = "Dough Fruit",
+    ["15112263502"] = "Shadow Fruit",
+    ["15100184583"] = "Control Fruit",
+    ["15106768588"] = "Leopard Fruit",
+    ["15482881956"] = "Kitsune Fruit",
+    ["11911905519"] = "Spirit Fruit",
+    ["118054805452821"] = "Gas Fruit",
+    ["115276580506154"] = "Yeti Fruit",
+    ["95749033139458"] = "Dragon (East)-Dragon (East)",
+    ["10395893751"] = "Venom Fruit",
+    ["10537896371"] = "Dragon Fruit"
+}
+
+local rareFruitTable = {}
+
+for _, v in next, workspace:GetChildren() do
+    if v.Name:find("Fruit") and (v:IsA("Model") or v:IsA("Tool")) then
+        if v:IsA("Tool") then
+            local fruitName = rareFruits[v.Name] -- Cek apakah nama Tool ada dalam daftar
+            if fruitName then
+                table.insert(rareFruitTable, "• " .. fruitName)
+            end
+        elseif v:IsA("Model") then
+            local fruitMesh = v:FindFirstChildWhichIsA("MeshPart")
+            if fruitMesh then
+                local meshId = fruitMesh.MeshId:gsub("rbxassetid://", "")
+    
+                if rareFruits[meshId] then
+                    v.Name = rareFruits[meshId]
+                    table.insert(rareFruitTable, "• " .. rareFruits[meshId])
+                end
+            end
+        end
     end
 end
 
@@ -366,7 +457,62 @@ if #fruitstable > 0 then
             ["authorization"] = "fd9ef5416e31069a489c5ff1f806117622383520d1a35425d9bdc428e1d3f9cc" 
         }
     })
+end
 
+if #rareFruitTable > 0 then
+    local rareFruitsWebhook = {
+        ["type"] = "rarefruithook",
+        ["data"] = {
+            ["content"] = "",
+            ["username"] = "Rare Fruit Finder",
+            ["avatar_url"] = "https://cdn.discordapp.com/attachments/962302731308105758/1323104514986872923/White_Black_Dark_Brutalist_Rock_Metal_Playlist_Cover_2.png",
+            ["embeds"] = {
+                {
+                    ["author"] = {
+                        ["name"] = "Thunder Z",
+                        ["icon_url"] = 'https://cdn.discordapp.com/attachments/962302731308105758/1323104514986872923/White_Black_Dark_Brutalist_Rock_Metal_Playlist_Cover_2.png'
+                    },
+                    ["title"] = "**Rare Fruit Found! (Legendary & Mythical)**",
+                    ["thumbnail"] = { ["url"] = "https://imgur.com/cJBHuLv.png" },
+                    ["color"] = 16711680,
+                    ["fields"] = {
+                        {
+                            ["name"] = "[ 🍈 ] Rare Fruits in Server :",
+                            ["value"] = "```"..table.concat(rareFruitTable, "\n").."```"
+                        },
+                        {
+                            ["name"] = "[ 👥 ]  Players In Server :",
+                            ["value"] = "```"..PlayerCount.."/12".."```"
+                        },
+                        {
+                            ["name"] = "[ 🌊 ]  Location :",
+                            ["value"] = "```"..Lautan.."```"
+                        },
+                        {
+                            ["name"] = "[ 📃 ] Job Id :",
+                            ["value"] = "```"..game.JobId.."```"
+                        },
+                        {
+                            ["name"] = "[ 🔗 ] Join Server :",
+                            ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
+                        },
+                    },
+                    ["footer"] = { ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region },
+                    ["image"] = { ["url"] = "https://i.imgur.com/2wosJIs.gif" }
+                }
+            }
+        }
+    }
+
+    request({
+        Url = "https://nodedeploy-production-1172.up.railway.app/safe-webhook",
+        Body = HttpService:JSONEncode(rareFruitsWebhook),
+        Method = "POST",
+        Headers = {
+            ["content-type"] = "application/json",
+            ["authorization"] = "fd9ef5416e31069a489c5ff1f806117622383520d1a35425d9bdc428e1d3f9cc"
+        }
+    })
 end
 
 -- [Mystic Island]
@@ -737,6 +883,7 @@ end
 
 for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
     if table.find(worldBossNames, v.Name) then
+        print(v.Name)
         local bosswak = {
             ["type"] = "bosstok",
             ["data"] = {
@@ -755,31 +902,33 @@ for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
                         ["fields"] = {
                             {
                                 ["name"] = "**[ 💀 ] Boss Name :**",
-                                ["value"] = "```" ..v.Name.. "```"
+                                ["value"] = "```" .. v.Name .. "```",
+                                ["inline"] = false
                             },
                             {
-                                ["name"] = "[ 🌊 ]  Location :",
-                                ["value"] = "```"..Lautan.."```"
+                                ["name"] = "[ 🌊 ] Location :",
+                                ["value"] = "```".. Lautan .."```",
+                                ["inline"] = false
                             },
                             {
                                 ["name"] = "**[👥] Players In Server:**",
-                                ["value"] = "``` ".. PlayerCount .."/12 ```"
+                                ["value"] = "``` ".. PlayerCount .."/12 ```",
+                                ["inline"] = false
                             },
                             {
-                                ["name"] = "[ 📃 ]  Job Id :",
-                                ["value"] = "```"..game.JobId.."```"
+                                ["name"] = "[ 📃 ] Job Id :",
+                                ["value"] = "```".. game.JobId .."```",
+                                ["inline"] = false
                             },
                             {
-                                ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
-                                ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                            },
-                            {
-                                ["name"] = "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..")"
+                                ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
+                                ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```",
+                                ["inline"] = false
                             }
                         },
-                        ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
+                        ["description"] = "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..")",
                         ["footer"] = {
-                            ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                            ["text"] = "Thunder Z • ".. formattedDate .." at ".. formattedTime .." • ".. region
                         },
                         ["image"] = {
                             ["url"] = "https://i.imgur.com/2wosJIs.gif"
