@@ -295,24 +295,24 @@ if not World1 then
 end
 
 local fruitNames = {
-    ["Rocket Fruit"] = "Rocket Fruit",
-    ["Spin Fruit"] = "Spin Fruit",
-    ["Blade Fruit"] = "Blade Fruit",
-    ["Spring Fruit"] = "Spring Fruit",
-    ["Bomb Fruit"] = "Bomb Fruit",
-    ["Smoke Fruit"] = "Smoke Fruit",
-    ["Spike Fruit"] = "Spike Fruit",
-    ["Flame Fruit"] = "Flame Fruit",
-    ["Falcon Fruit"] = "Falcon Fruit",
-    ["Ice Fruit"] = "Ice Fruit",
-    ["Sand Fruit"] = "Sand Fruit",
-    ["Dark Fruit"] = "Dark Fruit",
-    ["Diamond Fruit"] = "Diamond Fruit",
-    ["Light Fruit"] = "Light Fruit",
-    ["Rubber Fruit"] = "Rubber Fruit",
-    ["Barrier Fruit"] = "Barrier Fruit",
-    ["Ghost Fruit"] = "Ghost Fruit",
-    ["Magma Fruit"] = "Magma Fruit"
+    ["15060012861"] = "Rocket Fruit",
+    ["15057683975"] = "Spin Fruit",
+    ["15104782377"] = "Blade Fruit",
+    ["15105281957"] = "Spring Fruit",
+    ["15116740364"] = "Bomb Fruit",
+    ["15116696973"] = "Smoke Fruit",
+    ["15107005807"] = "Spike Fruit",
+    ["15111584216"] = "Flame Fruit",
+    ["15112469964"] = "Falcon Fruit",
+    ["15100433167"] = "Ice Fruit",
+    ["15111517529"] = "Sand Fruit",
+    ["15111553409"] = "Dark Fruit",
+    ["15112600534"] = "Diamond Fruit",
+    ["15100283484"] = "Light Fruit",
+    ["15104817760"] = "Rubber Fruit",
+    ["15100485671"] = "Barrier Fruit",
+    ["15112333093"] = "Ghost Fruit",
+    ["15105350415"] = "Magma Fruit",
 }
 
 local fruitstable = {}
@@ -324,25 +324,27 @@ for _, v in next, workspace:GetChildren() do
         if v:IsA("Tool") then
             for fruitKey, fruitDisplayName in pairs(fruitNames) do
                 if cleanedName == fruitKey:lower() then
-                    print("Found Fruit (Tool): " .. fruitDisplayName)
+                    print("Found Fruit : " .. fruitDisplayName)
                     table.insert(fruitstable, "• " .. fruitDisplayName)
                 end
             end
         elseif v:IsA("Model") then
-            local fruitMesh = v:FindFirstChildWhichIsA("MeshPart")
             if #v:GetChildren() > 1 then
-                if fruitMesh then
-                    local meshId = fruitMesh.MeshId:gsub("rbxassetid://", "")
-                    if fruitNames[meshId] then
-                        local fruitName = fruitNames[meshId]
-                        v.Name = fruitName 
-                        table.insert(fruitstable, "• " .. fruitName .. " (Appreared)")
-                        print("Found Fruit (Model): " .. fruitName)
+				local fruitContainer = v:FindFirstChild("Fruit")
+                if fruitContainer and fruitContainer:IsA("Model") then
+					local fruitMesh = fruitContainer:FindFirstChildWhichIsA("MeshPart")
+                    if fruitMesh then
+						local meshId = fruitMesh.MeshId:gsub("rbxassetid://", "")
+						if fruitNames[meshId] then
+                            local fruitName = fruitNames[meshId]
+                            v.Name = fruitName 
+                            table.insert(fruitstable, "• " .. fruitName .. " (Appeared)")
+                        end
                     end
-                end
-            elseif (v:FindFirstChild("FruitAnimator") and #v:GetChildren() <= 1) or #v:GetChildren() <= 1 then
-                table.insert(fruitstable, "• " .. v.Name .. " (Unrendered)")
-            end
+                end		
+			elseif (v:FindFirstChild("FruitAnimator") and #v:GetChildren() <= 1) or #v:GetChildren() <= 1 then
+				table.insert(fruitstable, "• " .. v.Name .. "(Unrendered)")
+			end
         end
     end
 end
@@ -386,36 +388,28 @@ for _, v in next, workspace:GetChildren() do
         if v:IsA("Tool") then
             for _, fruitDisplayName in pairs(rareFruits) do
                 if cleanedName == fruitDisplayName:lower() then
-                    print("Found Fruit (Tool): " .. fruitDisplayName)
+                    print("Found Fruit : " .. fruitDisplayName)
                     table.insert(rareFruitTable, "• " .. fruitDisplayName)
                 end
             end
         elseif v:IsA("Model") then
-            local fruitMesh = v:FindFirstChildWhichIsA("MeshPart")
             if #v:GetChildren() > 1 then
-                if fruitMesh then
-                    local meshId = fruitMesh.MeshId:gsub("rbxassetid://", "") -- Hapus "rbxassetid://"
-                    if rareFruits[meshId] then
-                        local fruitName = rareFruits[meshId]
-                        v.Name = fruitName -- Ganti nama model sesuai nama buah
-                        table.insert(rareFruitTable, "• " .. fruitName .. " (Appeared)")
-                        print("Found Fruit (Model): " .. fruitName)
+				local fruitContainer = v:FindFirstChild("Fruit")
+                if fruitContainer and fruitContainer:IsA("Model") then
+					local fruitMeshrare = fruitContainer:FindFirstChildWhichIsA("MeshPart")
+                    if fruitMeshrare then
+						local meshIdrare = fruitMeshrare.MeshId:gsub("rbxassetid://", "")
+						if rareFruits[meshIdrare] then
+                            local fruitNamerare = rareFruits[meshIdrare]
+                            v.Name = fruitNamerare 
+                            table.insert(fruitstable, "• " .. fruitNamerare .. " (Appeared)")
+                        end
                     end
-                end
-            elseif (v:FindFirstChild("FruitAnimator") and #v:GetChildren() <= 1) or #v:GetChildren() <= 1 then
-                table.insert(rareFruitTable, "• " .. v.Name .. " (Unrendered)")
+                end		
             end
         end
     end
 end
-
--- Cetak semua buah yang ditemukan
-if #rareFruitTable > 0 then
-    print("Fruits Found:\n" .. table.concat(rareFruitTable, "\n"))
-else
-    print("No fruits found.")
-end
-
 
 if #fruitstable > 0 then
     local buahbuahan = {
