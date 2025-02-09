@@ -3,12 +3,9 @@
 local HttpService = game:GetService("HttpService")
 local PlayerCount = #game.Players:GetPlayers()
 
-local now = useUTC and os.date("!*t") or os.date("*t") -- Gunakan UTC jika useUTC == true, atau waktu lokal jika false
-    
--- Format tanggal dan waktu
-local formattedDate = string.format("%02d/%02d/%04d", now.day, now.month, now.year) -- Format: DD/MM/YYYY
-local formattedTime = string.format("%02d:%02d:%02d", now.hour, now.min, now.sec) -- Format: HH:MM:SS
 
+local unixTimestamp = os.time() 
+local timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", unixTimestamp) 
 
 local region = "Unknown Region" 
 local success, result = pcall(function()
@@ -203,14 +200,21 @@ if not World1 then
                                 ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                                 ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
                             },
+                            {
+                                ["name"] = "[ ⌛ ] Time",
+                                ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                            },
                         },
                         ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                         ["footer"] = {
-                            ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                            ["text"] = "Thunder Z ["..region.."]"
                         },
+                        
                         ["image"] = {
                             ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                        }
+                        },
+
+                        ["timestamp"] = timestamp
                     }
                 }
             }
@@ -270,14 +274,19 @@ if not World1 then
                                 ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                                 ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
                             },
+                            {
+                                ["name"] = "[ ⌛ ] Time",
+                                ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                            },
                         },
                         ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                         ["footer"] = {
-                            ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                            ["text"] = "Thunder Z ["..region.."]"
                         },
                         ["image"] = {
                             ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                        }
+                        },
+                        ["timestamp"] = timestamp
                     }
                 }
             }
@@ -323,7 +332,7 @@ for _, v in next, workspace:GetChildren() do
 
         if v:IsA("Tool") then
             for fruitKey, fruitDisplayName in pairs(fruitNames) do
-                if cleanedName == fruitKey:lower() then
+                if cleanedName == fruitDisplayName:lower() then
                     print("Found Fruit : " .. fruitDisplayName)
                     table.insert(fruitstable, "• " .. fruitDisplayName)
                 end
@@ -386,10 +395,10 @@ for _, v in next, workspace:GetChildren() do
 
         -- Jika objek adalah Tool
         if v:IsA("Tool") then
-            for _, fruitDisplayName in pairs(rareFruits) do
-                if cleanedName == fruitDisplayName:lower() then
-                    print("Found Fruit : " .. fruitDisplayName)
-                    table.insert(rareFruitTable, "• " .. fruitDisplayName)
+            for _, fruitDisplayNamerare in pairs(rareFruits) do
+                if cleanedName == fruitDisplayNamerare:lower() then
+                    print("Found Fruit : " .. fruitDisplayNamerare)
+                    table.insert(rareFruitTable, "• " .. fruitDisplayNamerare)
                 end
             end
         elseif v:IsA("Model") then
@@ -402,7 +411,7 @@ for _, v in next, workspace:GetChildren() do
 						if rareFruits[meshIdrare] then
                             local fruitNamerare = rareFruits[meshIdrare]
                             v.Name = fruitNamerare 
-                            table.insert(fruitstable, "• " .. fruitNamerare .. " (Appeared)")
+                            table.insert(rareFruitTable, "• " .. fruitNamerare .. " (Appeared)")
                         end
                     end
                 end		
@@ -451,14 +460,18 @@ if #fruitstable > 0 then
                             ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
                         },
-                        
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
                     ["footer"] = {
-                        ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                        ["text"] = "Thunder Z ["..region.."]"
                     },
                     ["image"] = {
                         ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                    }
+                    },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -508,12 +521,19 @@ if #rareFruitTable > 0 then
                             ["value"] = "```"..game.JobId.."```"
                         },
                         {
-                            ["name"] = "[ 🔗 ] Join Server :",
+                            ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
                         },
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
-                    ["footer"] = { ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region },
-                    ["image"] = { ["url"] = "https://i.imgur.com/2wosJIs.gif" }
+                    ["footer"] = {
+                        ["text"] = "Thunder Z ["..region.."]"
+                    },
+                    ["image"] = { ["url"] = "https://i.imgur.com/2wosJIs.gif" },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -578,17 +598,22 @@ if World3 and game:GetService("Workspace").Map:FindFirstChild("MysticIsland") th
                             ["value"] = "```"..game.JobId.."```"
                         },
                         {
-                            ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
+                            ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                        }
+                        },
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
                     ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                     ["footer"] = {
-                        ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                        ["text"] = "Thunder Z ["..region.."]"
                     },
                     ["image"] = {
                         ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                    }
+                    },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -635,17 +660,22 @@ elseif World3 and game:GetService("Workspace")["_WorldOrigin"].Locations:FindFir
                             ["value"] = "```"..game.JobId.."```"
                         },
                         {
-                            ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
+                            ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                        }
+                        },
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
                     ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                     ["footer"] = {
-                        ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                        ["text"] = "Thunder Z ["..region.."]"
                     },
                     ["image"] = {
                         ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                    }
+                    },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -692,17 +722,22 @@ elseif World3 and game:GetService("Workspace")["_WorldOrigin"].Locations:FindFir
                             ["value"] = "```"..game.JobId.."```"
                         },
                         {
-                            ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
+                            ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                        }
+                        },
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
                     ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                     ["footer"] = {
-                        ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                        ["text"] = "Thunder Z ["..region.."]"
                     },
                     ["image"] = {
                         ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                    }
+                    },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -749,17 +784,22 @@ elseif World3 and game:GetService("Workspace")["_WorldOrigin"].Locations:FindFir
                             ["value"] = "```"..game.JobId.."```"
                         },
                         {
-                            ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
+                            ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                        }
+                        },
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
                     ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                     ["footer"] = {
-                        ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                        ["text"] = "Thunder Z ["..region.."]"
                     },
                     ["image"] = {
                         ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                    }
+                    },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -808,18 +848,22 @@ elseif World3 and game:GetService("Lighting").Sky.MoonTextureId=="http://www.rob
                             ["value"] = "```"..game.JobId.."```"
                         },
                         {
-                            ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
+                            ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                             ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                        }
-                        
+                        },
+                        {
+                            ["name"] = "[ ⌛ ] Time",
+                            ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                        },
                     },
                     ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                     ["footer"] = {
-                        ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                        ["text"] = "Thunder Z ["..region.."]"
                     },
                     ["image"] = {
                         ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                    }
+                    },
+                    ["timestamp"] = timestamp
                 }
             }
         }
@@ -868,18 +912,22 @@ elseif World2 then
                                 ["value"] = "```"..game.JobId.."```"
                             },
                             {
-                                ["name"] = "[ 🔗 ]  Join Server - Execute this to join Server :",
+                                ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                                 ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```"
-                            }
-                            
+                            },
+                            {
+                                ["name"] = "[ ⌛ ] Time",
+                                ["value"] = "<t:" .. unixTimestamp .. ":R>"
+                            },
                         },
                         ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                         ["footer"] = {
-                            ["text"] = "Thunder Z • "..formattedDate.." at "..formattedTime.." • "..region
+                            ["text"] = "Thunder Z ["..region.."]"
                         },
                         ["image"] = {
                             ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                        }
+                        },
+                        ["timestamp"] = timestamp
                     }
                 }
             }
@@ -939,15 +987,21 @@ for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
                                 ["name"] = "[ 🔗 ] Join Server - Execute this to join Server :",
                                 ["value"] = "```".."game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')".."```",
                                 ["inline"] = false
-                            }
+                            },
+                            {
+                                ["name"] = "[ ⌛ ] Time",
+                                ["value"] = "<t:" .. unixTimestamp .. ":R>",
+                                ["inline"] = false
+                            },
                         },
-                        ["description"] = "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..")",
+                        ["description"] =  "[Click here to Join for Roblox Web Version](https://www.roblox.com/home?placeId="..game.JobId..") | ",
                         ["footer"] = {
-                            ["text"] = "Thunder Z • ".. formattedDate .." at ".. formattedTime .." • ".. region
+                            ["text"] = "Thunder Z ["..region.."]"
                         },
                         ["image"] = {
                             ["url"] = "https://i.imgur.com/2wosJIs.gif"
-                        }
+                        },
+                        ["timestamp"] = timestamp
                     }
                 }
             }
