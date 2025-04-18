@@ -42,9 +42,10 @@ local SwordOcon = {
 }
 --Boss
 local bossNamesGroups = {
-    ["2753915549"] = {"The Saw", "Greybeard"},      -- First Sea
+    ["2753915549"] = {"The Saw", "Greybeard"}, -- First Sea
     ["4442272183"] = {"Darkbeard", "Order", "Cursed Captain"},  -- Second Sea
-    ["7449423635"] = {"rip_indra True Form", "Soul Reaper", "Cake Prince", "Dough King", "Leviathan"}  -- Third Sea
+    ["7449423635"] = {"rip_indra True Form", "Soul Reaper", "Cake Prince", "Dough King", "Leviathan", "Tyrant of the Skies"}  
+	--Third Sea
 }
 
 local worldBossNames = bossNamesGroups[tostring(game.PlaceId)] or {}
