@@ -313,14 +313,14 @@ local fruitNames = {
     ["15116696973"] = "Smoke Fruit",
     ["15107005807"] = "Spike Fruit",
     ["15111584216"] = "Flame Fruit",
-    ["15112469964"] = "Falcon Fruit",
+    ["15112469964"] = "Eagle Fruit",
     ["15100433167"] = "Ice Fruit",
     ["15111517529"] = "Sand Fruit",
     ["15111553409"] = "Dark Fruit",
     ["15112600534"] = "Diamond Fruit",
     ["15100283484"] = "Light Fruit",
     ["15104817760"] = "Rubber Fruit",
-    ["15100485671"] = "Barrier Fruit",
+    --["15100485671"] = "Barrier Fruit",
     ["15112333093"] = "Ghost Fruit",
     ["15105350415"] = "Magma Fruit",
 }
@@ -360,6 +360,7 @@ for _, v in next, workspace:GetChildren() do
 end
 
 local rareFruits = {
+    ["15100485671"] = "Creation Fruit",
     ["15057718441"] = "Quake Fruit",
     ["15100313696"] = "Buddha Fruit",
     ["15116730102"] = "Love Fruit",
